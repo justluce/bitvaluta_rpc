@@ -343,9 +343,9 @@ class Client:
         """return decodescript from bitvalutad"""
         return self.req("getaddressesbyaccount", [account])
 
-    def getbalance(self, account="*", minconf=0, include_watchonly=False):
+    def getbalance(self, account="*", minconf=0):
         """return getbalance from bitvalutad"""
-        return self.req("getbalance", [account, minconf, include_watchonly])
+        return self.req("getbalance", [account, minconf])
 
     def getreceivedbyaccount(self, account, minconf=0):
         """return getreceivedbyaccount from bitvalutad"""
