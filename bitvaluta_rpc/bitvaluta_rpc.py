@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Updated to Peercoin V0.8 by saeveritt
 
-__copyright__ = "Copyright 2019, The Peerchemist"
+__copyright__ = "Copyright 2020, Justin Luce"
 __license__ = "MIT"
-__email__ = "peerchemist@protonmail.ch"
+__email__ = "support@justinluce.com"
 
 ## Bitcoin API calls
 # https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list#Full_list
 
-## Peercoin API calls
-# https://docs.peercoin.net/#/json-rpc-api-reference
+## Bitvaluta API calls
+# https://docs.bitvaluta.net/#/json-rpc-api-reference
 
 import requests
 import json
@@ -40,11 +39,11 @@ class Client:
                 try:
                     self.username, self.password = (
                         self.userpass()
-                    )  # try to read from ~/.ppcoin
+                    )  # try to read from ~/.bitvaluta
                 except:
                     self.username, self.password = self.userpass(
-                        dir="peercoin"
-                    )  # try to read from ~/.peercoin
+                        dir="bitvaluta"
+                    )  # try to read from ~/.bitvaluta
             else:
                 self.username, self.password = self.userpass(
                     dir=directory
@@ -55,11 +54,11 @@ class Client:
             self.password = password
         if testnet is True:
             self.testnet = True
-            self.port = 9904
+            self.port = 15733
             self.url = "http://{0}:{1}".format(self.ip, self.port)
         else:
             self.testnet = False
-            self.port = 9902
+            self.port = 15733
             self.url = "http://{0}:{1}".format(self.ip, self.port)
         if port is not None:
             self.port = port
@@ -69,7 +68,7 @@ class Client:
         self.session.auth = (self.username, self.password)
         self.session.headers.update({"content-type": "application/json"})
 
-    def userpass(self, dir="ppcoin"):
+    def userpass(self, dir="Bitvaluta"):
         """Reads config file for username/password"""
 
         source = os.path.expanduser("~/.{0}/{0}.conf").format(dir)
@@ -84,7 +83,7 @@ class Client:
         return username, password
 
     def req(self, method, params=()):
-        """send request to peercoind"""
+        """send request to bitvalutad"""
 
         response = self.session.post(
             self.url,
@@ -116,7 +115,7 @@ class Client:
     # == Blockchain ==
 
     def getblockchaininfo(self):
-        """return getblockchaininfo from peercoind"""
+        """return getblockchaininfo from bitvalutad"""
         return self.req("getblockchaininfo")
 
     def getbestblockhash(self):
@@ -124,65 +123,65 @@ class Client:
         return self.req("getbestblockhash")
 
     def getblock(self, blockhash):
-        """return getblock from peercoind"""
+        """return getblock from bitvalutad"""
         return self.req("getblock", [blockhash])
 
     def getblockcount(self):
-        """return getblockcount from peercoind"""
+        """return getblockcount from bitvalutad"""
         return self.req("getblockcount")
 
     def getblockhash(self, height):
-        """return getblockhash from peercoind"""
+        """return getblockhash from bitvalutad"""
         return self.req("getblockhash", [height])
 
     def getblockheader(self, hash, verbose=False):
-        """return getblockheader from peercoind"""
+        """return getblockheader from bitvalutad"""
         return self.req("getblockheader")
 
     def getchaintips(self):
-        """return getchaintips from peercoind"""
+        """return getchaintips from bitvalutad"""
         return self.req("getchaintips")
 
     def getchaintxstats(self, nblocks=0, blockhash=""):
-        """return getchaintxstats from peercoind"""
+        """return getchaintxstats from bitvalutad"""
         query = nblocks
         if nblocks == 0 and blockhash != "":
             query = blockhash
         return self.req("getchaintxstats", [query])
 
     def getdifficulty(self):
-        """return getdifficulty from peercoind"""
+        """return getdifficulty from bitvalutad"""
         return self.req("getdifficulty")
 
     def getmempoolancestors(self, txid, verbose=False):
-        """return getinfo from peercoind"""
+        """return getinfo from bitvalutad"""
         return self.req("getmempoolancestors", [txid, verbose])
 
     def getmempoolentry(self, txid):
-        """return getmempoolentry from peercoind"""
+        """return getmempoolentry from bitvalutad"""
         return self.req("getmempoolentry", [txid])
 
     def getmempoolinfo(self):
-        """return getinfo from peercoind"""
+        """return getinfo from bitvalutad"""
         return self.req("getmempoolinfo")
 
     def getrawmempool(self, verbose=False):
-        """return getrawmempool from peercoind"""
+        """return getrawmempool from bitvalutad"""
         return self.req("getrawmempool", [verbose])
 
     def gettxout(self, txid, n, include_mempool=False):
-        """return gettxout from peercoind"""
+        """return gettxout from bitvalutad"""
         return self.req("gettxout", [txid, n, include_mempool])
 
     def gettxoutproof(self, txids=[], blockhash=""):
-        """return gettxoutproof from peercoind"""
+        """return gettxoutproof from bitvalutad"""
         if blockhash == "":
             return self.req("gettxoutproof", [txids])
         else:
             return self.req("gettxoutproof", [txids, blockhash])
 
     def gettxoutsetinfo(self):
-        """return gettxoutsetinfo from peercoind"""
+        """return gettxoutsetinfo from bitvalutad"""
         return self.req("gettxoutsetinfo")
 
     def preciousblock(self, blockhash=""):
@@ -190,15 +189,15 @@ class Client:
         return self.req("preciousblock", [blockhash])
 
     def savemempool(self):
-        """return savemempool from peercoind"""
+        """return savemempool from bitvalutad"""
         return self.req("savemempool")
 
     def verifychain(self, checklevel=3, nblocks=6):
-        """return verifychain from peercoind"""
+        """return verifychain from bitvalutad"""
         return self.req("verifychain", [checklevel, nblocks])
 
     def verifytxoutproof(self, proof):
-        """return verifytxoutproof from peercoind"""
+        """return verifytxoutproof from bitvalutad"""
         return self.req("gettxout", [proof])
 
     # == Network ==
@@ -208,7 +207,7 @@ class Client:
         return self.req("setnetworkactive", [state])
 
     def getpeerinfo(self):
-        """return getpeerinfo from peercoind"""
+        """return getpeerinfo from bitvalutad"""
         return self.req("getpeerinfo")
 
     def ping(self):
@@ -257,24 +256,24 @@ class Client:
         return self.req("help", [command]) if command else self.req("help")
 
     def getmemoryinfo(self, mode=None):
-        """return getmemoryinfo from peercoind"""
+        """return getmemoryinfo from bitvalutad"""
         if mode:
             return self.req("getmemoryinfo", [mode])
         else:
             return self.req("getmemoryinfo")
 
     def stop(self):
-        """stop peercoind"""
+        """stop bitvalutad"""
         return self.req("stop")
 
     def uptime(self):
-        """return uptime from peercoind"""
+        """return uptime from bitvalutad"""
         return self.req("uptime")
 
     # == Mining ==
 
     def getmininginfo(self):
-        """return getmininginfo from peercoind"""
+        """return getmininginfo from bitvalutad"""
         return self.req("getmininginfo")
 
     def getnetworkhashps(self, nblocks, height):
@@ -286,40 +285,40 @@ class Client:
     # == Rawtransactions ==
 
     def combinerawtransaction(self, hexstrings=[]):
-        """return combinerawtransaction from peercoind"""
+        """return combinerawtransaction from bitvalutad"""
         return self.req("combinerawtransaction", [hexstrings])
 
     def createrawtransaction(self, inputs=[], outputs={}, locktime=None):
-        """return createrawtransaction from peercoind"""
+        """return createrawtransaction from bitvalutad"""
         if locktime:
             return self.req("createrawtransaction", [inputs, outputs, locktime])
         else:
             return self.req("createrawtransaction", [inputs, outputs])
 
     def decoderawtransaction(self, hexstrings, iswitness=False):
-        """return decoderawtransaction from peercoind"""
+        """return decoderawtransaction from bitvalutad"""
         return self.req("decoderawtransaction", [hexstrings, iswitness])
 
     def decodescript(self, hexstring):
-        """return decodescript from peercoind"""
+        """return decodescript from bitvalutad"""
         return self.req("decodescript", [hexstring])
 
     def getrawtransaction(self, txid, verbose=False):
-        """return getrawtransaction from peercoind"""
+        """return getrawtransaction from bitvalutad"""
         return self.req("getrawtransaction", [txid, verbose])
 
     def sendrawtransaction(self, hexstring):
-        """return sendrawtransaction from peercoind"""
+        """return sendrawtransaction from bitvalutad"""
         return self.req("sendrawtransaction", [hexstring])
 
     # == Util ==
 
     def validateaddress(self, address):
-        """return validateaddress from peercoind"""
+        """return validateaddress from bitvalutad"""
         return self.req("validateaddress", [address])
 
     def verifymessage(self, address, signature, message):
-        """return decodescript from peercoind"""
+        """return decodescript from bitvalutad"""
         return self.req("verifymessage", [address, signature, message])
 
     # == Wallet ==
@@ -329,51 +328,51 @@ class Client:
         return self.req("keypoolrefil", [newsize])
 
     def dumpprivkey(self, address):
-        """return dumpprivkey from peercoind"""
+        """return dumpprivkey from bitvalutad"""
         return self.req("dumpprivkey", [address])
 
     def getaccount(self, address):
-        """return getaccount from peercoind"""
+        """return getaccount from bitvalutad"""
         return self.req("getaccount", [address])
 
     def getaccountaddress(self, account):
-        """return getaccountaddress from peercoind"""
+        """return getaccountaddress from bitvalutad"""
         return self.req("getaccountaddress", [account])
 
     def getaddressesbyaccount(self, account):
-        """return decodescript from peercoind"""
+        """return decodescript from bitvalutad"""
         return self.req("getaddressesbyaccount", [account])
 
     def getbalance(self, account="*", minconf=0, include_watchonly=False):
-        """return getbalance from peercoind"""
+        """return getbalance from bitvalutad"""
         return self.req("getbalance", [account, minconf, include_watchonly])
 
     def getreceivedbyaccount(self, account, minconf=0):
-        """return getreceivedbyaccount from peercoind"""
+        """return getreceivedbyaccount from bitvalutad"""
         return self.req("getreceivedbyaccount", [account, minconf])
 
     def getreceivedbyaddress(self, address, minconf=0):
-        """ getreceivedbyaddress from peercoind"""
+        """ getreceivedbyaddress from bitvalutad"""
         return self.req("getreceivedbyaddress", [address, minconf])
 
     def gettransaction(self, txid, include_watchonly=True):
-        """return gettransaction from peercoind"""
+        """return gettransaction from bitvalutad"""
         return self.req("decodescript", [txid])
 
     def getwalletinfo(self):
-        """return getwalletinfo from peercoind"""
+        """return getwalletinfo from bitvalutad"""
         return self.req("getwalletinfo")
 
     def importaddress(self, address, label="", rescan=True):
-        """return importaddress from peercoind"""
+        """return importaddress from bitvalutad"""
         return self.req("importaddress", [address, label, rescan])
 
     def importprivkey(self, privkey, label="", rescan=True):
-        """return importprivkey from peercoind"""
+        """return importprivkey from bitvalutad"""
         return self.req("importprivkey", [privkey, label, rescan])
 
     def listaccounts(self, minconf=0, include_watchonly=True):
-        """return listaccounts from peercoind"""
+        """return listaccounts from bitvalutad"""
         return self.req("listaccounts", [minconf, include_watchonly])
 
     def listtransactions(self, count=99999, skip=0, include_watchonly=False):
@@ -381,7 +380,7 @@ class Client:
         return self.req("listtransactions", ["*", count, skip, include_watchonly])
 
     def rescanblockchain(self, start_height=None, stop_height=None):
-        """return rescanblockchain from peercoind"""
+        """return rescanblockchain from bitvalutad"""
         if start_height is not None:
             if stop_height is not None:
                 return self.req("rescanblockchain", [start_height, stop_height])
@@ -391,5 +390,5 @@ class Client:
             return self.req("rescanblockchain")
 
     def walletpassphrase(self, passphrase, timeout):
-        """ return wallerpassphrase from peercoind"""
+        """ return wallerpassphrase from bitvalutad"""
         return self.req("walletpassphrase", [passphrase, timeout])
