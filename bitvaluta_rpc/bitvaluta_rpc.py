@@ -389,9 +389,9 @@ class Client:
         else:
             return self.req("rescanblockchain")
 
-    def sendtoaddress(self, address, amount):
-        """send <amount> of BTV to <address>"""
-        return self.req("sendtoaddress", [address, amount])
+    def sendfrom(self, fromaccount, address, amount):
+        """send <amount> of BTV from <fromaccount> to <address>"""
+        return self.req("sendtoaddress", [fromaccount, address, amount])
 
     def walletpassphrase(self, passphrase, timeout):
         """ return wallerpassphrase from bitvalutad"""
