@@ -379,6 +379,10 @@ class Client:
         """returns up to 'count' most recent transactions"""
         return self.req("listtransactions", ["*", count, skip, include_watchonly])
 
+    def move(self, fromaccount, toaccount, amount):
+        """send <amount> of BTV from <fromaccount> to <address>"""
+        return self.req("move", [fromaccount, toaccount, amount])
+
     def rescanblockchain(self, start_height=None, stop_height=None):
         """return rescanblockchain from bitvalutad"""
         if start_height is not None:
