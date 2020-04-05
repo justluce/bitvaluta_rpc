@@ -376,7 +376,7 @@ class Client:
         return self.req("listaccounts", [minconf, include_watchonly])
 
     def listtransactions(self, count=99999, skip=0, include_watchonly=False):
-        """Returns up to 'count' most recent transactions."""
+        """returns up to 'count' most recent transactions"""
         return self.req("listtransactions", ["*", count, skip, include_watchonly])
 
     def rescanblockchain(self, start_height=None, stop_height=None):
@@ -388,6 +388,10 @@ class Client:
                 return self.req("rescanblockchain", [start_height])
         else:
             return self.req("rescanblockchain")
+
+    def sendtoaddress(self, address, amount):
+        """send <amount> of BTV to <address>"""
+        return self.req("sendtoaddress", [address, amount])
 
     def walletpassphrase(self, passphrase, timeout):
         """ return wallerpassphrase from bitvalutad"""
