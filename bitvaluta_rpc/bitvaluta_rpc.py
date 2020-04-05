@@ -391,7 +391,7 @@ class Client:
 
     def sendfrom(self, fromaccount, address, amount):
         """send <amount> of BTV from <fromaccount> to <address>"""
-        return self.req("sendtoaddress", [fromaccount, address, amount])
+        return self.req("sendfrom", [fromaccount, address, amount])
 
     def walletpassphrase(self, passphrase, timeout):
         """ return wallerpassphrase from bitvalutad"""
