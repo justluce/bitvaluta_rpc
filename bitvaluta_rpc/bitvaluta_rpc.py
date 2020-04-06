@@ -355,6 +355,10 @@ class Client:
         """ getreceivedbyaddress from bitvalutad"""
         return self.req("getreceivedbyaddress", [address, minconf])
 
+    def getstakinginfo(self):
+        """return getstakinginfo from bitvalutad"""
+        return self.req("getstakinginfo")
+
     def gettransaction(self, txid, include_watchonly=True):
         """return gettransaction from bitvalutad"""
         return self.req("decodescript", [txid])
