@@ -4,4 +4,4 @@ try:
 except ImportError:
     from bitvaluta_rpc import Client
 
-__version__ = 0.75
+__version__ = 1.01

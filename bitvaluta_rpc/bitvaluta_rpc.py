@@ -112,295 +112,310 @@ class Client:
     # RPC methods
     # general syntax is req($method, [array_of_parameters])
 
-    # == Blockchain ==
-
-    def getblockchaininfo(self):
-        """return getblockchaininfo from bitvalutad"""
-        return self.req("getblockchaininfo")
-
-    def getbestblockhash(self):
-        """Returns the hash of the best (tip) block in the longest block chain."""
-        return self.req("getbestblockhash")
-
-    def getblock(self, blockhash):
-        """return getblock from bitvalutad"""
-        return self.req("getblock", [blockhash])
-
-    def getblockcount(self):
-        """return getblockcount from bitvalutad"""
-        return self.req("getblockcount")
-
-    def getblockhash(self, height):
-        """return getblockhash from bitvalutad"""
-        return self.req("getblockhash", [height])
-
-    def getblockheader(self, hash, verbose=False):
-        """return getblockheader from bitvalutad"""
-        return self.req("getblockheader")
-
-    def getchaintips(self):
-        """return getchaintips from bitvalutad"""
-        return self.req("getchaintips")
-
-    def getchaintxstats(self, nblocks=0, blockhash=""):
-        """return getchaintxstats from bitvalutad"""
-        query = nblocks
-        if nblocks == 0 and blockhash != "":
-            query = blockhash
-        return self.req("getchaintxstats", [query])
-
-    def getdifficulty(self):
-        """return getdifficulty from bitvalutad"""
-        return self.req("getdifficulty")
-
-    def getmempoolancestors(self, txid, verbose=False):
-        """return getinfo from bitvalutad"""
-        return self.req("getmempoolancestors", [txid, verbose])
-
-    def getmempoolentry(self, txid):
-        """return getmempoolentry from bitvalutad"""
-        return self.req("getmempoolentry", [txid])
-
-    def getmempoolinfo(self):
-        """return getinfo from bitvalutad"""
-        return self.req("getmempoolinfo")
-
-    def getrawmempool(self, verbose=False):
-        """return getrawmempool from bitvalutad"""
-        return self.req("getrawmempool", [verbose])
-
-    def gettxout(self, txid, n, include_mempool=False):
-        """return gettxout from bitvalutad"""
-        return self.req("gettxout", [txid, n, include_mempool])
-
-    def gettxoutproof(self, txids=[], blockhash=""):
-        """return gettxoutproof from bitvalutad"""
-        if blockhash == "":
-            return self.req("gettxoutproof", [txids])
-        else:
-            return self.req("gettxoutproof", [txids, blockhash])
-
-    def gettxoutsetinfo(self):
-        """return gettxoutsetinfo from bitvalutad"""
-        return self.req("gettxoutsetinfo")
-
-    def preciousblock(self, blockhash=""):
-        """Treats a block as if it were received before others with the same work."""
-        return self.req("preciousblock", [blockhash])
-
-    def savemempool(self):
-        """return savemempool from bitvalutad"""
-        return self.req("savemempool")
-
-    def verifychain(self, checklevel=3, nblocks=6):
-        """return verifychain from bitvalutad"""
-        return self.req("verifychain", [checklevel, nblocks])
-
-    def verifytxoutproof(self, proof):
-        """return verifytxoutproof from bitvalutad"""
-        return self.req("gettxout", [proof])
-
-    # == Network ==
-
-    def setnetworkactive(self, state=True):
-        """Disable/enable all p2p network activity."""
-        return self.req("setnetworkactive", [state])
-
-    def getpeerinfo(self):
-        """return getpeerinfo from bitvalutad"""
-        return self.req("getpeerinfo")
-
-    def ping(self):
-        """Requests that a ping be sent to all other nodes, to measure ping time.
-           Results provided in getpeerinfo, pingtime and pingwait fields are decimal seconds.
-           Ping command is handled in queue with all other commands, so it measures processing backlog, not just network ping."""
-        return self.req("ping")
-
-    def getnetworkinfo(self):
-        """Returns an object containing various state info regarding P2P networking."""
-        return self.req("getnetworkinfo")
+    def addmultisigaddress(self, nrequired, key, account):
+        """addmultisigaddress <nrequired> <'["key","key"]'> [account]"""
+        return self.req("addmultisigaddress", [nrequired, key, account])
 
     def addnode(self, node, operation):
-        """Attempts add or remove <node> from the addnode list or try a connection to <node> once."""
+        """addnode <node> <add|remove|onetry>"""
         return self.req("addnode", [node, operation])
 
-    def disconnectnode(self, address="", nodeid=""):
-        """Immediately disconnects from the specified peer node."""
-        return self.req("disconnectnode", [address, nodeid])
+    def addredeemscript(self, redeemScript, account):
+        """addredeemscript <redeemScript> [account]"""
+        return self.req("addredeemscript", [redeemScript, account])
+    
+    def backupwallet(self, location):
+        """backupwallet <destination>"""
+        return self.req("backupwallet", [location])
 
-    def clearbanned(self):
-        """Clear all banned IPs."""
-        return self.req("clearbanned")
+    def burn(self, amount, hex_string):
+        """burn <amount> [hex string]"""
+        return self.req("burn", [amount, hex_string])
 
-    def listbanned(self):
-        """List all banned IPs/Subnets."""
-        return self.req("listbanned")
+    def burnwallet(self, hex_string, force):
+        """burnwallet [hex string] [force]"""
+        return self.req("burnwallet", [hex_string, force])
 
-    def getaddednodeinfo(self, nodeid=""):
-        """Returns information about the given added node, or all added nodes"""
-        return self.req("getaddednodeinfo", [nodeid])
+    def checkkernel(self, txid, createblocktemplate=false):
+        """checkkernel [{"txid":txid,"vout":n},...] [createblocktemplate=false]"""
+        return self.req("checkkernel", [txid, createblocktemplate])
 
-    def getconnectioncount(self):
-        """Returns the number of connections to other nodes."""
-        return self.req("getconnectioncount")
+    def checkwallet(self):
+        """checkwallet"""
+        return self.req("checkwallet")
 
-    def getnettotals(self):
-        """Returns information about network traffic, including bytes in, bytes out,
-           and current time."""
-        return self.req("getnettotals")
+    def createrawtransaction(self, txid, amount):
+        """createrawtransaction [{"txid":txid,"vout":n},...] {address:amount,...}"""
+        return self.req("createrawtransaction", [txid, amount])
 
-    # == Control ==
+    def decoderawtransaction(self, hex_string):
+        """decoderawtransaction <hex string>"""
+        return self.req("decoderawtransaction", [hex_string])
 
-    def help(self, command=None):
-        """List commands, or get help for a command."""
-        return self.req("help", [command]) if command else self.req("help")
+    def decodescript(self, hex_string):
+        """decodescript <hex string>"""
+        return self.req("decodescript", [hex_string])
 
-    def getmemoryinfo(self, mode=None):
-        """return getmemoryinfo from bitvalutad"""
-        if mode:
-            return self.req("getmemoryinfo", [mode])
-        else:
-            return self.req("getmemoryinfo")
+    def dumpprivkey(self, bitvalutaaddress):
+        """dumpprivkey <bitvalutaaddress>"""
+        return self.req("dumpprivkey", [bitvalutaaddress])
 
-    def stop(self):
-        """stop bitvalutad"""
-        return self.req("stop")
+    def dumpwallet(self, filename):
+        """dumpwallet <filename>"""
+        return self.req("dumpwallet", [filename])
 
-    def uptime(self):
-        """return uptime from bitvalutad"""
-        return self.req("uptime")
-
-    # == Mining ==
-
-    def getmininginfo(self):
-        """return getmininginfo from bitvalutad"""
-        return self.req("getmininginfo")
-
-    def getnetworkhashps(self, nblocks, height):
-        """Returns the estimated network hashes per second based on the last n blocks.
-           Pass in [blocks] to override # of blocks, -1 specifies since last difficulty change.
-           Pass in [height] to estimate the network speed at the time when a certain block was found."""
-        return self.req("getnetworkhashps", [nblocks, height])
-
-    # == Rawtransactions ==
-
-    def combinerawtransaction(self, hexstrings=[]):
-        """return combinerawtransaction from bitvalutad"""
-        return self.req("combinerawtransaction", [hexstrings])
-
-    def createrawtransaction(self, inputs=[], outputs={}, locktime=None):
-        """return createrawtransaction from bitvalutad"""
-        if locktime:
-            return self.req("createrawtransaction", [inputs, outputs, locktime])
-        else:
-            return self.req("createrawtransaction", [inputs, outputs])
-
-    def decoderawtransaction(self, hexstrings, iswitness=False):
-        """return decoderawtransaction from bitvalutad"""
-        return self.req("decoderawtransaction", [hexstrings, iswitness])
-
-    def decodescript(self, hexstring):
-        """return decodescript from bitvalutad"""
-        return self.req("decodescript", [hexstring])
-
-    def getrawtransaction(self, txid, verbose=False):
-        """return getrawtransaction from bitvalutad"""
-        return self.req("getrawtransaction", [txid, verbose])
-
-    def sendrawtransaction(self, hexstring):
-        """return sendrawtransaction from bitvalutad"""
-        return self.req("sendrawtransaction", [hexstring])
-
-    # == Util ==
-
-    def validateaddress(self, address):
-        """return validateaddress from bitvalutad"""
-        return self.req("validateaddress", [address])
-
-    def verifymessage(self, address, signature, message):
-        """return decodescript from bitvalutad"""
-        return self.req("verifymessage", [address, signature, message])
-
-    # == Wallet ==
-
-    def keypoolrefil(self, newsize=None):
-        """Fills the keypool."""
-        return self.req("keypoolrefil", [newsize])
-
-    def dumpprivkey(self, address):
-        """return dumpprivkey from bitvalutad"""
-        return self.req("dumpprivkey", [address])
-
-    def getaccount(self, address):
-        """return getaccount from bitvalutad"""
-        return self.req("getaccount", [address])
+    def getaccount(self, bitvalutaaddress):
+        """getaccount <bitvalutaaddress>"""
+        return self.req("getaccount", [bitvalutaaddress])
 
     def getaccountaddress(self, account):
-        """return getaccountaddress from bitvalutad"""
+        """getaccountaddress <account>"""
         return self.req("getaccountaddress", [account])
 
+    def getaddednodeinfo(self, dns, node):
+        """getaddednodeinfo <dns> [node]"""
+        return self.req("getaddednodeinfo", [dns, node])
+
     def getaddressesbyaccount(self, account):
-        """return decodescript from bitvalutad"""
+        """getaddressesbyaccount <account>"""
         return self.req("getaddressesbyaccount", [account])
 
-    def getbalance(self, account="*", minconf=0):
-        """return getbalance from bitvalutad"""
-        return self.req("getbalance", [account, minconf])
+    def getbalance(self, account, mincomf=1):
+        """getbalance [account] [minconf=1]"""
+        return self.req("getbalance", [account, mincomf])
 
-    def getreceivedbyaccount(self, account, minconf=0):
-        """return getreceivedbyaccount from bitvalutad"""
-        return self.req("getreceivedbyaccount", [account, minconf])
+    def getbestblockhash(self):
+        """getbestblockhash"""
+        return self.req("command")
 
-    def getreceivedbyaddress(self, address, minconf=0):
-        """ getreceivedbyaddress from bitvalutad"""
-        return self.req("getreceivedbyaddress", [address, minconf])
+    def getblock(self, hash, txinfo):
+        """getblock <hash> [txinfo]"""
+        return self.req("getblock", [hash, txinfo])
+
+    def getblockbynumber(self, number, txinfo):
+        """getblockbynumber <number> [txinfo]"""
+        return self.req("getblockbynumber", [number, txinfo])
+
+    def getblockcount(self):
+        """getblockcount"""
+        return self.req("getblockcount")
+
+    def getblockhash(self, index):
+        """getblockhash <index>"""
+        return self.req("getblockhash", [index])
+
+    def getblocktemplate(self, params):
+        """getblocktemplate [params]"""
+        return self.req("getblocktemplate", [params])
+
+    def getcheckpoint(self):
+        """getcheckpoint"""
+        return self.req("getcheckpoint")
+
+    def getconnectioncount(self):
+        """getconnectioncount"""
+        return self.req("getconnectioncount")
+
+    def getdifficulty(self):
+        """getdifficulty"""
+        return self.req("getdifficulty")
+
+    def getinfo(self):
+        """getinfo"""
+        return self.req("getinfo")
+
+    def getmininginfo(self):
+        """getmininginfo"""
+        return self.req("getmininginfo")
+
+    def getnettotals(self):
+        """getnettotals"""
+        return self.req("getnettotals")
+
+    def getnewaddress(self, account):
+        """getnewaddress [account]"""
+        return self.req("getnewaddress", [account])
+
+    def getnewpubkey(self, account):
+        """getnewpubkey [account]"""
+        return self.req("getnewpubkey", [account])
+
+    def getpeerinfo(self):
+        """getpeerinfo"""
+        return self.req("getpeerinfo")
+
+    def getrawmempool(self):
+        """getrawmempool"""
+        return self.req("getrawmempool")
+
+    def getrawtransaction(self, txid, verbose=0):
+        """getrawtransaction <txid> [verbose=0]"""
+        return self.req("getrawtransaction", [txid, verbose])
+
+    def getreceivedbyaccount(self, account, mincomf=1):
+        """getreceivedbyaccount <account> [minconf=1]"""
+        return self.req("getreceivedbyaccount", [account, mincomf])
+
+    def getreceivedbyaddress(self, bitvalutaaddress, mincomf=1):
+        """getreceivedbyaddress <bitvalutaaddress> [minconf=1]"""
+        return self.req("getreceivedbyaddress", [bitvalutaaddress, mincomf])
+
+    def getstakesubsidy(self, hex_string):
+        """getstakesubsidy <hex string>"""
+        return self.req("getstakesubsidy", [hex_string])
 
     def getstakinginfo(self):
-        """return getstakinginfo from bitvalutad"""
+        """getstakinginfo"""
         return self.req("getstakinginfo")
 
-    def gettransaction(self, txid, include_watchonly=True):
-        """return gettransaction from bitvalutad"""
-        return self.req("decodescript", [txid])
+    def getsubsidy(self, nTarget):
+        """getsubsidy [nTarget]"""
+        return self.req("getsubsidy", [nTarget])
 
-    def getwalletinfo(self):
-        """return getwalletinfo from bitvalutad"""
-        return self.req("getwalletinfo")
+    def gettransaction(self, txid):
+        """gettransaction <txid>"""
+        return self.req("gettransaction", [txid])
 
-    def importaddress(self, address, label="", rescan=True):
-        """return importaddress from bitvalutad"""
-        return self.req("importaddress", [address, label, rescan])
+    def getwork(self, data):
+        """getwork [data]"""
+        return self.req("getwork", [data])
 
-    def importprivkey(self, privkey, label="", rescan=True):
-        """return importprivkey from bitvalutad"""
-        return self.req("importprivkey", [privkey, label, rescan])
+    def getworkex(self, data):
+        """getworkex [data, coinbase]"""
+        return self.req("getworkex", [data])
 
-    def listaccounts(self, minconf=0, include_watchonly=True):
-        """return listaccounts from bitvalutad"""
-        return self.req("listaccounts", [minconf, include_watchonly])
+    def help(self, cmd):
+        """help [command]"""
+        return self.req("help", [cmd])
 
-    def listtransactions(self, count=99999, skip=0, include_watchonly=False):
-        """returns up to 'count' most recent transactions"""
-        return self.req("listtransactions", ["*", count, skip, include_watchonly])
+    def importprivkey(self, bitvalutaprivkey, label, rescan=true):
+        """importprivkey <bitvalutaprivkey> [label] [rescan=true]"""
+        return self.req("importprivkey", [bitvalutaprivkey, label, rescan])
 
-    def move(self, fromaccount, toaccount, amount):
-        """send <amount> of BTV from <fromaccount> to <address>"""
-        return self.req("move", [fromaccount, toaccount, amount])
+    def importwallet(self, filename):
+        """importwallet <filename>"""
+        return self.req("importwallet", [filename])
 
-    def rescanblockchain(self, start_height=None, stop_height=None):
-        """return rescanblockchain from bitvalutad"""
-        if start_height is not None:
-            if stop_height is not None:
-                return self.req("rescanblockchain", [start_height, stop_height])
-            else:
-                return self.req("rescanblockchain", [start_height])
-        else:
-            return self.req("rescanblockchain")
+    def keypoolrefill(self, new_size):
+        """keypoolrefill [new-size]"""
+        return self.req("keypoolrefill", [new_size])
 
-    def sendfrom(self, fromaccount, address, amount):
-        """send <amount> of BTV from <fromaccount> to <address>"""
-        return self.req("sendfrom", [fromaccount, address, amount])
+    def listaccounts(self, minconf=1):
+        """listaccounts [minconf=1]"""
+        return self.req("listaccounts", [minconf])
 
-    def walletpassphrase(self, passphrase, timeout):
-        """ return wallerpassphrase from bitvalutad"""
-        return self.req("walletpassphrase", [passphrase, timeout])
+    def listaddressgroupings(self):
+        """listaddressgroupings"""
+        return self.req("listaddressgroupings")
+
+    def listreceivedbyaccount(self, minconf=1, includeempty=false):
+        """listreceivedbyaccount [minconf=1] [includeempty=false]"""
+        return self.req("listreceivedbyaccount", [minconf, includeempty])
+
+    def listreceivedbyaddress(self, minconf=1, includeempty=false):
+        """listreceivedbyaddress [minconf=1] [includeempty=false]"""
+        return self.req("listreceivedbyaddress", [minconf, includeempty])
+
+    def listsinceblock(self, blockhash, target_confirmations):
+        """listsinceblock [blockhash] [target-confirmations]"""
+        return self.req("listsinceblock", [blockhash, target_confirmations])
+
+    def listtransactions(self, account, count=10, from_param=0):
+        """listtransactions [account] [count=10] [from=0]"""
+        return self.req("listtransactions", [account, count, from_param])
+
+    def listunspent(self, mincomf, maxconf, address):
+        """listunspent [minconf=1] [maxconf=9999999] ["address",...]"""
+        return self.req("listunspent", [mincomf, maxconf, address])
+
+    def makekeypair(self, prefix):
+        """makekeypair [prefix]"""
+        return self.req("makekeypair", [prefix])
+
+    def move(self, from_account, to_account, amount, mincomf=1, comment=""):
+        """move <fromaccount> <toaccount> <amount> [minconf=1] [comment]"""
+        return self.req("move", [from_account, to_account, amount, mincomf, comment])
+
+    def ping(self):
+        """ping"""
+        return self.req("ping")
+
+    def repairwallet(self):
+        """repairwallet"""
+        return self.req("repairwallet")
+
+    def resendtx(self):
+        """resendtx"""
+        return self.req("resendtx")
+
+    def reservebalance(self, param):
+        """reservebalance [<reserve> [amount]]"""
+        return self.req("reservebalance", [param])
+
+    def sendalert(self, message, privatekey, minver, maxver, priority, id, cancelupto):
+        """sendalert <message> <privatekey> <minver> <maxver> <priority> <id> [cancelupto]"""
+        return self.req("sendalert", [message, privatekey, minver, maxver, priority, id, cancelupto])
+
+    def sendfrom(self, from_account, tobitvalutaaddress, amount, mincomf=1, comment="", comment_to=""):
+        """sendfrom <fromaccount> <tobitvalutaaddress> <amount> [minconf=1] [comment] [comment-to]"""
+        return self.req("sendfrom", [from_account, tobitvalutaaddress, amount, mincomf, comment, comment_to])
+
+    def sendmany(self, from_account, address, mincomf=1, comment=""):
+        """sendmany <fromaccount> {address:amount,...} [minconf=1] [comment]"""
+        return self.req("sendmany", [from_account, address, mincomf, comment])
+
+    def sendrawtransaction(self, hex_string):
+        """sendrawtransaction <hex string>"""
+        return self.req("sendrawtransaction", [hex_string])
+
+    def sendtoaddress(self, bitvalutaaddress, amount, comment="", comment_to=""):
+        """sendtoaddress <bitvalutaaddress> <amount> [comment] [comment-to]"""
+        return self.req("sendtoaddress", [bitvalutaaddress, amount, comment, comment_to])
+
+    def setaccount(self, bitvalutaaddress, account):
+        """setaccount <bitvalutaaddress> <account>"""
+        return self.req("setaccount", [bitvalutaaddress, account])
+
+    def settxfee(self, amount):
+        """settxfee <amount>"""
+        return self.req("settxfee", [amount])
+
+    def signmessage(self, bitvalutaaddress, message):
+        """signmessage <bitvalutaaddress> <message>"""
+        return self.req("signmessage", [bitvalutaaddress, message])
+
+    def signrawtransaction(self, hex_string, param, priv_key, signhashtype="ALL"):
+        """signrawtransaction <hex string> [{"txid":txid,"vout":n,"scriptPubKey":hex,"redeemScript":hex},...] [<privatekey1>,...] [sighashtype="ALL"]"""
+        return self.req("signrawtransaction", [hex_string, param, priv_key, signhashtype])
+
+    def stop(self):
+        """stop"""
+        return self.req("stop")
+
+    def submitblock(self, hex_data):
+        """submitblock <hex data> [optional-params-obj]"""
+        return self.req("submitblock", [hex_data])
+
+    def validateaddress(self, bitvalutaaddress):
+        """validateaddress <bitvalutaaddress>"""
+        return self.req("validateaddress", [bitvalutaaddress])
+
+    def validatepubkey(self, bitvalutapubkey):
+        """validatepubkey <bitvalutapubkey>"""
+        return self.req("validatepubkey", [bitvalutapubkey])
+
+    def verifymessage(self, bitvalutaaddress, signature, message):
+        """verifymessage <bitvalutaaddress> <signature> <message>"""
+        return self.req("verifymessage", [bitvalutaaddress, signature, message])
+
+    def walletlock(self):
+        """walletlock"""
+        return self.req("walletlock")
+
+    def walletpassphrase(self, passphrase, timeout, stakingonly):
+        """walletpassphrase <passphrase> <timeout> [stakingonly]"""
+        return self.req("walletpassphrase", [passphrase, timeout, stakingonly])
+
+    def walletpassphrasechange(self, oldpassphrase, newpassphrase):
+        """walletpassphrasechange <oldpassphrase> <newpassphrase>"""
+        return self.req("walletpassphrasechange", [oldpassphrase, newpassphrase])
