@@ -31,7 +31,7 @@ Use it:
 
 > node.getbalance()
 
-Availible Commands:
+Available Commands:
 
 > `addmultisigaddress <nrequired> <'["key","key"]'> [account]` 
  

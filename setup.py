@@ -17,7 +17,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='bitvaluta_rpc',
-      version='1.01',
+      version='1.02',
       description='Library to communicate with bitvaluta daemon via JSON-RPC protocol.',
       long_description=long_description,
       long_description_content_type='text/markdown',
