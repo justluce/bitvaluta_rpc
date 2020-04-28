@@ -136,8 +136,8 @@ class Client:
         """burnwallet [hex string] [force]"""
         return self.req("burnwallet", [hex_string, force])
 
-    def checkkernel(self, txid, createblocktemplate=false):
-        """checkkernel [{"txid":txid,"vout":n},...] [createblocktemplate=false]"""
+    def checkkernel(self, txid, createblocktemplate=False):
+        """checkkernel [{"txid":txid,"vout":n},...] [createblocktemplate=False]"""
         return self.req("checkkernel", [txid, createblocktemplate])
 
     def checkwallet(self):
@@ -288,8 +288,8 @@ class Client:
         """help [command]"""
         return self.req("help", [cmd])
 
-    def importprivkey(self, bitvalutaprivkey, label, rescan=true):
-        """importprivkey <bitvalutaprivkey> [label] [rescan=true]"""
+    def importprivkey(self, bitvalutaprivkey, label, rescan=True):
+        """importprivkey <bitvalutaprivkey> [label] [rescan=True]"""
         return self.req("importprivkey", [bitvalutaprivkey, label, rescan])
 
     def importwallet(self, filename):
@@ -308,12 +308,12 @@ class Client:
         """listaddressgroupings"""
         return self.req("listaddressgroupings")
 
-    def listreceivedbyaccount(self, minconf=1, includeempty=false):
-        """listreceivedbyaccount [minconf=1] [includeempty=false]"""
+    def listreceivedbyaccount(self, minconf=1, includeempty=False):
+        """listreceivedbyaccount [minconf=1] [includeempty=False]"""
         return self.req("listreceivedbyaccount", [minconf, includeempty])
 
-    def listreceivedbyaddress(self, minconf=1, includeempty=false):
-        """listreceivedbyaddress [minconf=1] [includeempty=false]"""
+    def listreceivedbyaddress(self, minconf=1, includeempty=False):
+        """listreceivedbyaddress [minconf=1] [includeempty=False]"""
         return self.req("listreceivedbyaddress", [minconf, includeempty])
 
     def listsinceblock(self, blockhash, target_confirmations):
