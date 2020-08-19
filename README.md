@@ -4,7 +4,7 @@
 [![PyPI](https://img.shields.io/pypi/v/peercoin_rpc.svg?style=flat-square)](https://pypi.python.org/pypi/bitvaluta_rpc/)
 [![](https://img.shields.io/badge/python-2.7+-blue.svg)](https://www.python.org/download/releases/2.7.0/) 
 
-
+**RIP BITVALUTA, Twas an okay altcoin. This should work with most POS (Proof of Stake coins) though.**
 Bitvaluta_rpc is a simple and minimal library made for communication with `bitvalutad` via JSON-RPC protocol.
 It has a single dependency - a Python `requests` library and it supports both mainnet and testnet bitvaluta network with authentication or SSL encryption.
 There is a single class to be imported from the library - `Client`.
